@@ -1,0 +1,43 @@
+---
+// Hero.astro - Hero section component with props
+export interface Props {
+  title: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaLink?: string;
+  backgroundImage?: string;
+}
+
+const { title, subtitle, ctaText, ctaLink, backgroundImage } = Astro.props;
+---
+
+<section class={`relative py-20 px-4 text-center ${backgroundImage ? 'bg-cover bg-center' : 'bg-gradient-to-r from-indigo-600 to-purple-600'}`} 
+         style={backgroundImage ? `background-image: url(${backgroundImage})` : ''}>
+  {backgroundImage && (
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+  )}
+  
+  <div class="relative max-w-4xl mx-auto">
+    <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+      {title}
+    </h1>
+    
+    {subtitle && (
+      <p class="text-xl md:text-2xl text-white opacity-90 mb-8">
+        {subtitle}
+      </p>
+    )}
+    
+    {ctaText && ctaLink && (
+      <a 
+        href={ctaLink}
+        class="inline-block bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors duration-300 transform hover:scale-105"
+      >
+        {ctaText}
+      </a>
+    )}
+    
+    <!-- Slot for additional content -->
+    <slot />
+  </div>
+</section>

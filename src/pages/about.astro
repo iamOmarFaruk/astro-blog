@@ -1,0 +1,144 @@
+---
+// About page - demonstrating more component usage and props
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Card from '../components/Card.astro';
+
+// Static data - this page uses SSG
+const teamMembers = [
+  {
+    name: "Astro Team",
+    role: "Framework Creators",
+    avatar: "🚀",
+    description: "The amazing team behind Astro framework"
+  },
+  {
+    name: "Community",
+    role: "Contributors",
+    avatar: "👥",
+    description: "Thousands of developers building amazing things"
+  },
+  {
+    name: "You",
+    role: "Learner",
+    avatar: "🎓",
+    description: "Learning modern web development with Astro"
+  }
+];
+
+const stats = [
+  { label: "GitHub Stars", value: "40k+", icon: "⭐" },
+  { label: "NPM Downloads", value: "2M+", icon: "📦" },
+  { label: "Community Size", value: "100k+", icon: "👥" },
+  { label: "Performance Score", value: "100", icon: "⚡" }
+];
+---
+
+<Layout title="About - Astro Learning Blog" description="Learn about Astro framework and modern web development">
+  <!-- Hero Section -->
+  <Hero 
+    title="About Astro"
+    subtitle="The web framework for content-driven websites"
+  />
+
+  <!-- Introduction Section -->
+  <section class="py-16 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="prose prose-lg mx-auto">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6">🚀 What is Astro?</h2>
+      <p class="text-lg text-gray-700 mb-6">
+        Astro is a modern web framework that delivers lightning-fast performance with a developer-friendly experience. 
+        It's designed for building content-driven websites like blogs, marketing sites, portfolios, and documentation sites.
+      </p>
+      
+      <h3 class="text-2xl font-semibold text-gray-900 mb-4">Key Concepts You'll Learn:</h3>
+      <ul class="list-disc list-inside space-y-2 text-gray-700 mb-8">
+        <li><strong>Components:</strong> Reusable UI pieces with TypeScript support</li>
+        <li><strong>Props:</strong> Passing data between components</li>
+        <li><strong>SSG (Static Site Generation):</strong> Pre-built pages for maximum performance</li>
+        <li><strong>SSR (Server-Side Rendering):</strong> Dynamic content rendered on the server</li>
+        <li><strong>Islands Architecture:</strong> Selective hydration for interactive components</li>
+        <li><strong>API Integration:</strong> Fetching data from external sources</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">📊 Astro by the Numbers</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        {stats.map(stat => (
+          <Card padding="lg" gradient={true}>
+            <div class="text-center">
+              <div class="text-4xl mb-2">{stat.icon}</div>
+              <div class="text-3xl font-bold text-indigo-600 mb-1">{stat.value}</div>
+              <div class="text-gray-600">{stat.label}</div>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">👥 The Community</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {teamMembers.map(member => (
+          <Card title={member.name} hover={true}>
+            <div class="text-center">
+              <div class="text-6xl mb-4">{member.avatar}</div>
+              <p class="text-indigo-600 font-semibold mb-2">{member.role}</p>
+              <p class="text-gray-700">{member.description}</p>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Showcase -->
+  <section class="py-16 bg-gradient-to-r from-indigo-600 to-purple-600">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-bold text-white mb-8">🛠️ Component Props in Action</h2>
+      <p class="text-xl text-white opacity-90 mb-8">
+        This page demonstrates various Astro concepts:
+      </p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+        <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-white mb-3">📦 Props & TypeScript</h3>
+          <ul class="text-white opacity-90 space-y-1 text-sm">
+            <li>• Interface definitions</li>
+            <li>• Default prop values</li>
+            <li>• Optional properties</li>
+            <li>• Type safety</li>
+          </ul>
+        </div>
+        
+        <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-6">
+          <h3 class="text-lg font-semibold text-white mb-3">🎨 Component Composition</h3>
+          <ul class="text-white opacity-90 space-y-1 text-sm">
+            <li>• Reusable Card component</li>
+            <li>• Hero component with slots</li>
+            <li>• Layout with navigation</li>
+            <li>• Conditional rendering</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="mt-8">
+        <a 
+          href="/blog"
+          class="inline-flex items-center bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+        >
+          See Dynamic Content
+          <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

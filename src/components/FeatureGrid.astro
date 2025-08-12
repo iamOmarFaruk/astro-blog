@@ -1,0 +1,60 @@
+---
+// FeatureGrid.astro - Component showcasing Astro features
+import Card from './Card.astro';
+
+const features = [
+  {
+    title: "🚀 Zero JavaScript Runtime",
+    description: "Astro ships zero JavaScript by default, making your site incredibly fast.",
+    icon: "⚡"
+  },
+  {
+    title: "🏝️ Island Architecture", 
+    description: "Use any framework (React, Vue, Svelte) only where needed.",
+    icon: "🏝️"
+  },
+  {
+    title: "📄 SSG & SSR",
+    description: "Static Site Generation by default, with opt-in Server-Side Rendering.",
+    icon: "🔄"
+  },
+  {
+    title: "🎨 Bring Your CSS",
+    description: "Supports Tailwind, Sass, CSS Modules, and any CSS framework.",
+    icon: "🎨"
+  },
+  {
+    title: "🔧 TypeScript Ready",
+    description: "Built-in TypeScript support with zero configuration required.",
+    icon: "📘"
+  },
+  {
+    title: "⚡ Lightning Fast",
+    description: "Optimized builds and minimal JavaScript for maximum performance.",
+    icon: "🚄"
+  }
+];
+---
+
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">Why Astro?</h2>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Discover the features that make Astro the perfect framework for building fast, modern websites.
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {features.map(feature => (
+        <Card hover={true} gradient={true}>
+          <div class="text-center">
+            <div class="text-4xl mb-4">{feature.icon}</div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
+            <p class="text-gray-700">{feature.description}</p>
+          </div>
+        </Card>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,210 @@
+---
+// Dynamic blog post page - demonstrating dynamic routing and SSG with getStaticPaths
+import Layout from '../../layouts/Layout.astro';
+import BlogPost from '../../components/BlogPost.astro';
+import Card from '../../components/Card.astro';
+
+// TypeScript interfaces for type safety
+interface Post {
+  id: number;
+  title: string;
+  body: string;
+  userId: number;
+}
+
+interface Props {
+  post: Post;
+}
+
+// This demonstrates Static Site Generation with dynamic routes
+// getStaticPaths tells Astro which pages to pre-generate at build time
+export async function getStaticPaths() {
+  try {
+    // Fetch all posts at build time
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const posts: Post[] = await response.json();
+    
+    // Generate paths for first 20 posts (to keep build time reasonable)
+    return posts.slice(0, 20).map((post: Post) => ({
+      params: { id: post.id.toString() },
+      props: { post }
+    }));
+  } catch (error) {
+    console.error('Failed to fetch posts for static generation:', error);
+    // Return empty array if API fails - no pages will be generated
+    return [];
+  }
+}
+
+// Get the post data from props (passed from getStaticPaths)
+const { post }: Props = Astro.props;
+const { id } = Astro.params;
+
+// Fetch related posts (this could be cached or computed at build time)
+let relatedPosts: Post[] = [];
+try {
+  const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+  const allPosts: Post[] = await response.json();
+  // Get 3 random related posts (excluding current post)
+  relatedPosts = allPosts
+    .filter((p: Post) => p.id !== post.id)
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 3);
+} catch (error) {
+  console.error('Failed to fetch related posts:', error);
+}
+
+// Generate some reading time (mock calculation)
+const readingTime = Math.max(1, Math.ceil(post.body.length / 200));
+---
+
+<Layout 
+  title={`${post.title} - Astro Blog`} 
+  description={post.body.substring(0, 150) + '...'}
+>
+  <!-- Article Header -->
+  <header class="bg-gradient-to-r from-indigo-600 to-purple-600 py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center text-white">
+        <div class="mb-4">
+          <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">
+            📄 Post #{post.id}
+          </span>
+          <span class="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm ml-2">
+            🕒 {readingTime} min read
+          </span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+          {post.title}
+        </h1>
+        <p class="text-xl opacity-90">
+          Generated at build time using SSG (Static Site Generation)
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Article Content -->
+  <article class="py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- SSG Information Banner -->
+      <Card title="🏗️ SSG in Action" padding="lg" gradient={true}>
+        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+          <p class="text-blue-800">
+            <strong>Static Site Generation:</strong> This page was pre-generated at build time using 
+            <code class="bg-blue-100 px-1 rounded">getStaticPaths()</code>. The content is static and loads instantly!
+          </p>
+        </div>
+      </Card>
+
+      <!-- Main Content -->
+      <div class="prose prose-lg mx-auto my-12">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+          <BlogPost 
+            id={post.id}
+            title={post.title}
+            body={post.body}
+            userId={post.userId}
+            excerpt={false}
+            showMeta={true}
+          />
+        </div>
+      </div>
+
+      <!-- Technical Details -->
+      <Card title="🔧 How This Page Works" padding="lg">
+        <div class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-green-50 p-4 rounded-lg">
+              <h4 class="font-semibold text-green-900 mb-2">✅ Build Time (SSG):</h4>
+              <ul class="text-sm text-green-800 space-y-1">
+                <li>• Fetched from API during build</li>
+                <li>• Pre-generated HTML</li>
+                <li>• Instant loading</li>
+                <li>• SEO optimized</li>
+              </ul>
+            </div>
+            
+            <div class="bg-blue-50 p-4 rounded-lg">
+              <h4 class="font-semibold text-blue-900 mb-2">🚀 Runtime Benefits:</h4>
+              <ul class="text-sm text-blue-800 space-y-1">
+                <li>• Zero server processing</li>
+                <li>• CDN cacheable</li>
+                <li>• Perfect Lighthouse scores</li>
+                <li>• Offline capable</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="bg-gray-100 p-4 rounded-lg">
+            <h4 class="font-semibold text-gray-900 mb-2">📝 getStaticPaths() Example:</h4>
+            <pre class="text-sm text-gray-800 overflow-x-auto"><code>{`export async function getStaticPaths() {
+  const response = await fetch('https://api.example.com/posts');
+  const posts = await response.json();
+  
+  return posts.map(post => ({
+    params: { id: post.id.toString() },
+    props: { post }
+  }));
+}`}</code></pre>
+          </div>
+        </div>
+      </Card>
+    </div>
+  </article>
+
+  <!-- Related Posts -->
+  {relatedPosts.length > 0 && (
+    <section class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">📖 Related Posts</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {relatedPosts.map((relatedPost: Post) => (
+            <BlogPost 
+              id={relatedPost.id}
+              title={relatedPost.title}
+              body={relatedPost.body}
+              userId={relatedPost.userId}
+              excerpt={true}
+              showMeta={false}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Navigation -->
+  <section class="py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+        <a 
+          href="/blog"
+          class="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium transition-colors"
+        >
+          <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+          Back to Blog
+        </a>
+        
+        <div class="flex space-x-4">
+          {post.id > 1 && (
+            <a 
+              href={`/blog/${post.id - 1}`}
+              class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+            >
+              ← Previous
+            </a>
+          )}
+          <a 
+            href={`/blog/${post.id + 1}`}
+            class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+          >
+            Next →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

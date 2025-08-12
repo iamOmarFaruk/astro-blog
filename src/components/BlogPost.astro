@@ -1,0 +1,75 @@
+---
+// BlogPost.astro - Blog post component demonstrating props and conditional rendering
+export interface Props {
+  id: number;
+  title: string;
+  body: string;
+  userId: number;
+  excerpt?: boolean;
+  showMeta?: boolean;
+}
+
+const { id, title, body, userId, excerpt = false, showMeta = true } = Astro.props;
+
+// Simulate author data (in real app, this might come from another API or database)
+const authors = {
+  1: { name: 'Alice Johnson', avatar: '👩‍💻', role: 'Frontend Developer' },
+  2: { name: 'Bob Smith', avatar: '👨‍🎨', role: 'UI/UX Designer' },
+  3: { name: 'Carol Davis', avatar: '👩‍🔬', role: 'Data Scientist' },
+  4: { name: 'David Wilson', avatar: '👨‍💼', role: 'Product Manager' },
+  5: { name: 'Eva Brown', avatar: '👩‍🚀', role: 'DevOps Engineer' },
+  6: { name: 'Frank Miller', avatar: '👨‍🏫', role: 'Technical Writer' },
+  7: { name: 'Grace Lee', avatar: '👩‍⚖️', role: 'QA Engineer' },
+  8: { name: 'Henry Taylor', avatar: '👨‍🔧', role: 'Backend Developer' },
+  9: { name: 'Ivy Chen', avatar: '👩‍🎓', role: 'Research Scientist' },
+  10: { name: 'Jack Robinson', avatar: '👨‍💻', role: 'Full Stack Developer' }
+};
+
+const author = authors[userId as keyof typeof authors] || authors[1];
+const displayBody = excerpt ? body.substring(0, 150) + '...' : body;
+---
+
+<article class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+  {showMeta && (
+    <div class="px-6 py-4 bg-gray-50 border-b">
+      <div class="flex items-center space-x-3">
+        <span class="text-2xl">{author.avatar}</span>
+        <div>
+          <p class="font-semibold text-gray-900">{author.name}</p>
+          <p class="text-sm text-gray-600">{author.role}</p>
+        </div>
+      </div>
+    </div>
+  )}
+  
+  <div class="p-6">
+    <h2 class="text-xl font-bold text-gray-900 mb-3 hover:text-indigo-600 transition-colors">
+      <a href={`/blog/${id}`} class="hover:underline">
+        {title}
+      </a>
+    </h2>
+    
+    <p class="text-gray-700 leading-relaxed mb-4">
+      {displayBody}
+    </p>
+    
+    {excerpt && (
+      <a 
+        href={`/blog/${id}`}
+        class="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium transition-colors"
+      >
+        Read more
+        <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </a>
+    )}
+  </div>
+  
+  <div class="px-6 py-3 bg-gray-50 border-t">
+    <div class="flex items-center justify-between text-sm text-gray-600">
+      <span>Post #{id}</span>
+      <span>Author ID: {userId}</span>
+    </div>
+  </div>
+</article>

@@ -1,0 +1,55 @@
+---
+// Card.astro - Reusable card component demonstrating props and slots
+export interface Props {
+  title?: string;
+  href?: string;
+  gradient?: boolean;
+  hover?: boolean;
+  padding?: 'sm' | 'md' | 'lg';
+  shadow?: boolean;
+}
+
+const { 
+  title, 
+  href, 
+  gradient = false, 
+  hover = true, 
+  padding = 'md',
+  shadow = true 
+} = Astro.props;
+
+const paddingClasses = {
+  sm: 'p-4',
+  md: 'p-6',
+  lg: 'p-8'
+};
+
+const cardClasses = [
+  'rounded-lg border',
+  gradient ? 'bg-gradient-to-br from-white to-gray-50' : 'bg-white',
+  shadow ? 'shadow-md' : '',
+  hover ? 'hover:shadow-lg transition-all duration-300' : '',
+  paddingClasses[padding],
+  'group'
+].filter(Boolean).join(' ');
+---
+
+{href ? (
+  <a href={href} class={`block ${cardClasses} hover:scale-105`}>
+    {title && (
+      <h3 class="text-xl font-semibold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
+        {title}
+      </h3>
+    )}
+    <slot />
+  </a>
+) : (
+  <div class={cardClasses}>
+    {title && (
+      <h3 class="text-xl font-semibold text-gray-900 mb-3">
+        {title}
+      </h3>
+    )}
+    <slot />
+  </div>
+)}
