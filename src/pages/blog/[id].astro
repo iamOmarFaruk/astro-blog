@@ -181,6 +181,7 @@ const readingTime = Math.max(1, Math.ceil(post.body.length / 200));
         <a 
           href="/blog"
           class="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium transition-colors"
+          data-astro-prefetch="hover"
         >
           <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -193,6 +194,7 @@ const readingTime = Math.max(1, Math.ceil(post.body.length / 200));
             <a 
               href={`/blog/${post.id - 1}`}
               class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+              data-astro-prefetch="hover"
             >
               ← Previous
             </a>
@@ -200,6 +202,7 @@ const readingTime = Math.max(1, Math.ceil(post.body.length / 200));
           <a 
             href={`/blog/${post.id + 1}`}
             class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+            data-astro-prefetch="hover"
           >
             Next →
           </a>

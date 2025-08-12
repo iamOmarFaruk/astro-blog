@@ -1,5 +1,7 @@
 ---
 // Layout.astro - Main layout component demonstrating props and slots
+import { ViewTransitions } from 'astro:transitions';
+
 export interface Props {
   title: string;
   description?: string;
@@ -23,6 +25,39 @@ import '../styles/global.css';
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <ViewTransitions />
+    <style>
+      /* Custom page transition animations */
+      html.astro-transition * {
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+      }
+      
+      /* Smooth fade transition for page changes */
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation-duration: 0.3s;
+      }
+      
+      ::view-transition-old(root) {
+        animation-name: fade-out;
+      }
+      
+      ::view-transition-new(root) {
+        animation-name: fade-in;
+      }
+      
+      @keyframes fade-out {
+        to {
+          opacity: 0;
+        }
+      }
+      
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- Navigation Component -->
@@ -40,6 +75,7 @@ import '../styles/global.css';
               class={`text-gray-700 hover:text-indigo-600 transition-colors font-medium ${
                 currentPath === '/' ? 'text-purple-600 underline font-semibold' : ''
               }`}
+              data-astro-prefetch="hover"
             >
               Home
             </a>
@@ -48,6 +84,7 @@ import '../styles/global.css';
               class={`text-gray-700 hover:text-indigo-600 transition-colors font-medium ${
                 currentPath === '/about' ? 'text-purple-600 underline font-semibold' : ''
               }`}
+              data-astro-prefetch="hover"
             >
               About
             </a>
@@ -56,6 +93,7 @@ import '../styles/global.css';
               class={`text-gray-700 hover:text-indigo-600 transition-colors font-medium ${
                 currentPath === '/faq' ? 'text-purple-600 underline font-semibold' : ''
               }`}
+              data-astro-prefetch="hover"
             >
               FAQ
             </a>
@@ -64,8 +102,18 @@ import '../styles/global.css';
               class={`text-gray-700 hover:text-indigo-600 transition-colors font-medium ${
                 currentPath.startsWith('/blog') ? 'text-purple-600 underline font-semibold' : ''
               }`}
+              data-astro-prefetch="hover"
             >
               Blog
+            </a>
+            <a 
+              href="/contact" 
+              class={`bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:shadow-lg hover:scale-105 hover:-translate-y-1 ${
+                currentPath === '/contact' ? 'shadow-lg scale-105' : ''
+              }`}
+              data-astro-prefetch="hover"
+            >
+              Contact
             </a>
           </div>
         </div>
@@ -88,8 +136,8 @@ import '../styles/global.css';
           <div>
             <h3 class="text-lg font-semibold mb-4">Learn</h3>
             <ul class="space-y-2 text-gray-300">
-              <li><a href="/blog" class="hover:text-white transition-colors">Blog Posts</a></li>
-              <li><a href="/about" class="hover:text-white transition-colors">About Astro</a></li>
+              <li><a href="/blog" class="hover:text-white transition-colors" data-astro-prefetch="hover">Blog Posts</a></li>
+              <li><a href="/about" class="hover:text-white transition-colors" data-astro-prefetch="hover">About Astro</a></li>
               <li><a href="https://docs.astro.build" class="hover:text-white transition-colors" target="_blank">Documentation</a></li>
             </ul>
           </div>

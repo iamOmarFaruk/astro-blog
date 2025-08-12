@@ -44,7 +44,7 @@ const displayBody = excerpt ? body.substring(0, 150) + '...' : body;
   
   <div class="p-6">
     <h2 class="text-xl font-bold text-gray-900 mb-3 hover:text-indigo-600 transition-colors">
-      <a href={`/blog/${id}`} class="hover:underline">
+      <a href={`/blog/${id}`} class="hover:underline" data-astro-prefetch="hover">
         {title}
       </a>
     </h2>
@@ -57,6 +57,7 @@ const displayBody = excerpt ? body.substring(0, 150) + '...' : body;
       <a 
         href={`/blog/${id}`}
         class="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium transition-colors"
+        data-astro-prefetch="hover"
       >
         Read more
         <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

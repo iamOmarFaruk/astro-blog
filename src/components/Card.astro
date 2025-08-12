@@ -35,7 +35,7 @@ const cardClasses = [
 ---
 
 {href ? (
-  <a href={href} class={`block ${cardClasses} hover:scale-105`}>
+  <a href={href} class={`block ${cardClasses} hover:scale-105`} data-astro-prefetch="hover">
     {title && (
       <h3 class="text-xl font-semibold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
         {title}
