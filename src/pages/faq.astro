@@ -1,0 +1,125 @@
+---
+// FAQ page - demonstrating React integration with Astro
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import FAQAccordion from '../components/FAQAccordion.tsx';
+
+// FAQ data - in a real app, this could come from a CMS or API
+const faqData = [
+  {
+    id: "what-is-astro",
+    title: "What is Astro?",
+    icon: "🚀",
+    content: "Astro is a modern web framework for building fast, content-driven websites. It delivers zero JavaScript by default and uses an island architecture to selectively hydrate interactive components only when needed."
+  },
+  {
+    id: "components-props",
+    title: "How do components and props work?",
+    icon: "🧩",
+    content: "Components in Astro are reusable pieces of UI that can accept props (properties) to customize their behavior and appearance. Props are defined using TypeScript interfaces and passed down from parent to child components, enabling flexible and maintainable code."
+  },
+  {
+    id: "ssg-vs-ssr",
+    title: "What's the difference between SSG and SSR?",
+    icon: "⚡",
+    content: "SSG (Static Site Generation) pre-builds pages at build time for maximum performance, while SSR (Server-Side Rendering) generates pages on each request for dynamic content. Astro supports both approaches, letting you choose the best strategy for each page."
+  },
+  {
+    id: "dynamic-routing",
+    title: "How does dynamic routing work?",
+    icon: "🛣️",
+    content: "Dynamic routing in Astro uses file-based routing with square brackets like [id].astro. You can use getStaticPaths() to pre-generate static pages or enable SSR for truly dynamic routes. This allows for flexible URL structures and content management."
+  },
+  {
+    id: "react-integration",
+    title: "Can I use React with Astro?",
+    icon: "⚛️",
+    content: "Yes! Astro supports React, Vue, Svelte, and other frameworks through its island architecture. You can use React components for interactive parts of your site while keeping the rest static for optimal performance. This FAQ component is built with React!"
+  },
+  {
+    id: "styling-options",
+    title: "What styling options are available?",
+    icon: "🎨",
+    content: "Astro supports various styling approaches including Tailwind CSS, CSS Modules, Sass, styled-components, and plain CSS. You can scope styles to components or use global stylesheets. This project uses Tailwind CSS for utility-first styling."
+  },
+  {
+    id: "performance-benefits",
+    title: "Why is Astro so fast?",
+    icon: "🏎️",
+    content: "Astro delivers exceptional performance through zero JavaScript by default, selective hydration, static generation, and optimized builds. It only ships JavaScript for components that actually need interactivity, resulting in faster load times and better Core Web Vitals."
+  },
+  {
+    id: "deployment",
+    title: "How do I deploy an Astro site?",
+    icon: "🌐",
+    content: "Astro sites can be deployed to any static hosting provider like Netlify, Vercel, GitHub Pages, or Cloudflare Pages. For SSR, you can deploy to platforms that support Node.js. The build process generates optimized static files or server-ready applications."
+  }
+];
+---
+
+<Layout title="FAQ - Astro Learning Blog" description="Frequently asked questions about Astro and modern web development">
+  <!-- Hero Section -->
+  <Hero 
+    title="Frequently Asked Questions"
+    subtitle="Get answers to common questions about Astro, components, SSR, SSG, and more"
+  />
+
+  <!-- FAQ Section -->
+  <section class="py-16 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">💡 Common Questions</h2>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Click on any question below to reveal detailed answers about Astro and modern web development concepts.
+      </p>
+    </div>
+
+    <!-- React FAQ Accordion Component -->
+    <FAQAccordion 
+      items={faqData}
+      defaultOpenId="what-is-astro"
+      className="max-w-3xl mx-auto"
+      client:load
+    />
+  </section>
+
+  <!-- Learning Resources -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">📚 Learn More</h2>
+        <p class="text-lg text-gray-600">
+          Still have questions? Check out these resources to dive deeper.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+          <div class="text-4xl mb-4">📖</div>
+          <h3 class="text-xl font-semibold mb-3">Documentation</h3>
+          <p class="text-gray-600 mb-4">Comprehensive guides and API references</p>
+          <a href="https://docs.astro.build" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-medium">
+            Read the Docs →
+          </a>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+          <div class="text-4xl mb-4">💬</div>
+          <h3 class="text-xl font-semibold mb-3">Community</h3>
+          <p class="text-gray-600 mb-4">Join thousands of developers in Discord</p>
+          <a href="https://astro.build/chat" target="_blank" class="text-indigo-600 hover:text-indigo-800 font-medium">
+            Join Discord →
+          </a>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+          <div class="text-4xl mb-4">🎓</div>
+          <h3 class="text-xl font-semibold mb-3">Examples</h3>
+          <p class="text-gray-600 mb-4">Browse our blog posts and code examples</p>
+          <a href="/blog" class="text-indigo-600 hover:text-indigo-800 font-medium">
+            View Examples →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

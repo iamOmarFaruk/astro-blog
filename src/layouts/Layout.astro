@@ -52,6 +52,14 @@ import '../styles/global.css';
               About
             </a>
             <a 
+              href="/faq" 
+              class={`text-gray-700 hover:text-indigo-600 transition-colors font-medium ${
+                currentPath === '/faq' ? 'text-purple-600 underline font-semibold' : ''
+              }`}
+            >
+              FAQ
+            </a>
+            <a 
               href="/blog" 
               class={`text-gray-700 hover:text-indigo-600 transition-colors font-medium ${
                 currentPath.startsWith('/blog') ? 'text-purple-600 underline font-semibold' : ''
