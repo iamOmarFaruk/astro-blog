@@ -41,7 +41,6 @@ By exploring this project, you'll master:
 
 ## 📁 Project Structure
 
-```
 src/
 ├── layouts/
 │   └── Layout.astro          # Main layout with navigation and footer
