@@ -7,11 +7,10 @@ import Card from '../components/Card.astro';
 
 // This page will be statically generated at build time (SSG)
 // Data fetching happens at build time
-const welcomeMessage = "Welcome to Astro Learning";
 const currentYear = new Date().getFullYear();
 ---
 
-<Layout title="Home - Astro Learning Blog" showBackground={true}>
+<Layout title="Home - Astro Learning Blog">
   <!-- Hero Section -->
   <Hero 
     title="Learn Astro by Building"

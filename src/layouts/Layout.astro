@@ -3,10 +3,9 @@
 export interface Props {
   title: string;
   description?: string;
-  showBackground?: boolean;
 }
 
-const { title, description = "A modern Astro blog to learn components, SSR, SSG and more!", showBackground = false } = Astro.props;
+const { title, description = "A modern Astro blog to learn components, SSR, SSG and more!" } = Astro.props;
 
 // Import the global styles
 import '../styles/global.css';
