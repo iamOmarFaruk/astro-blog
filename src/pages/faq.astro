@@ -1,60 +1,11 @@
 ---
-// FAQ page - demonstrating React integration with Astro
+// FAQ page - demonstrating React integration with Astro and external data
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import FAQAccordion from '../components/FAQAccordion.tsx';
 
-// FAQ data - in a real app, this could come from a CMS or API
-const faqData = [
-  {
-    id: "what-is-astro",
-    title: "What is Astro?",
-    icon: "🚀",
-    content: "Astro is a modern web framework for building fast, content-driven websites. It delivers zero JavaScript by default and uses an island architecture to selectively hydrate interactive components only when needed."
-  },
-  {
-    id: "components-props",
-    title: "How do components and props work?",
-    icon: "🧩",
-    content: "Components in Astro are reusable pieces of UI that can accept props (properties) to customize their behavior and appearance. Props are defined using TypeScript interfaces and passed down from parent to child components, enabling flexible and maintainable code."
-  },
-  {
-    id: "ssg-vs-ssr",
-    title: "What's the difference between SSG and SSR?",
-    icon: "⚡",
-    content: "SSG (Static Site Generation) pre-builds pages at build time for maximum performance, while SSR (Server-Side Rendering) generates pages on each request for dynamic content. Astro supports both approaches, letting you choose the best strategy for each page."
-  },
-  {
-    id: "dynamic-routing",
-    title: "How does dynamic routing work?",
-    icon: "🛣️",
-    content: "Dynamic routing in Astro uses file-based routing with square brackets like [id].astro. You can use getStaticPaths() to pre-generate static pages or enable SSR for truly dynamic routes. This allows for flexible URL structures and content management."
-  },
-  {
-    id: "react-integration",
-    title: "Can I use React with Astro?",
-    icon: "⚛️",
-    content: "Yes! Astro supports React, Vue, Svelte, and other frameworks through its island architecture. You can use React components for interactive parts of your site while keeping the rest static for optimal performance. This FAQ component is built with React!"
-  },
-  {
-    id: "styling-options",
-    title: "What styling options are available?",
-    icon: "🎨",
-    content: "Astro supports various styling approaches including Tailwind CSS, CSS Modules, Sass, styled-components, and plain CSS. You can scope styles to components or use global stylesheets. This project uses Tailwind CSS for utility-first styling."
-  },
-  {
-    id: "performance-benefits",
-    title: "Why is Astro so fast?",
-    icon: "🏎️",
-    content: "Astro delivers exceptional performance through zero JavaScript by default, selective hydration, static generation, and optimized builds. It only ships JavaScript for components that actually need interactivity, resulting in faster load times and better Core Web Vitals."
-  },
-  {
-    id: "deployment",
-    title: "How do I deploy an Astro site?",
-    icon: "🌐",
-    content: "Astro sites can be deployed to any static hosting provider like Netlify, Vercel, GitHub Pages, or Cloudflare Pages. For SSR, you can deploy to platforms that support Node.js. The build process generates optimized static files or server-ready applications."
-  }
-];
+// Import FAQ data from external JSON file
+import faqData from '../data/faq.json';
 ---
 
 <Layout title="FAQ - Astro Learning Blog" description="Frequently asked questions about Astro and modern web development">

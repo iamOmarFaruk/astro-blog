@@ -34,7 +34,7 @@ const FAQAccordion: React.FC<FAQAccordionProps> = ({
           {/* Header */}
           <button
             onClick={() => toggleItem(item.id)}
-            className={`w-full px-6 py-4 text-left flex items-center justify-between transition-all duration-200 rounded-lg outline-none ${
+            className={`w-full px-6 py-4 text-left flex items-center justify-between transition-all duration-200 rounded-lg outline-none cursor-pointer ${
               openItem === item.id 
                 ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white' 
                 : 'hover:bg-gray-50'
