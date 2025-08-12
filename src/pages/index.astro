@@ -82,19 +82,7 @@ const currentYear = new Date().getFullYear();
         </p>
       </div>
       
-      <div class="bg-gray-900 rounded-lg p-6 overflow-x-auto">
-        <pre class="text-green-400 text-sm"><code>{`---
-// This runs at BUILD TIME (SSG)
-import Layout from '../layouts/Layout.astro';
-const message = "${welcomeMessage}";
-const year = ${currentYear};
----
 
-<Layout title="Home">
-  <h1>{message}</h1>
-  <p>Built in {year}</p>
-</Layout>`}</code></pre>
-      </div>
       
       <div class="mt-8 text-center">
         <a 
