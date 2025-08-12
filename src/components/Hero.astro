@@ -31,7 +31,7 @@ const { title, subtitle, ctaText, ctaLink, backgroundImage } = Astro.props;
     {ctaText && ctaLink && (
       <a 
         href={ctaLink}
-        class="inline-block bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors duration-300 transform hover:scale-105"
+        class="inline-block bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold text-lg hover:bg-gray-100 hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:-translate-y-1"
       >
         {ctaText}
       </a>
